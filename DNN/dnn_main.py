@@ -32,6 +32,7 @@ model = Sequential()
 model.add(Dense(64, activation='relu',input_shape=(n_features,)))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
+model.add
 model.add(Dense(output_class,activation='softmax'))
 
 # opt=Adam(learning_rate=0.001)

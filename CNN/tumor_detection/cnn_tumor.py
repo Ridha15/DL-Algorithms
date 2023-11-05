@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from tqdm import tqdm
 
-image_dir='artifacts/tumordata/'
+image_dir='CNN/tumor_detection/brain_tumor_dataset'
 no_tumor_images=os.listdir(image_dir+ '/no')
 yes_tumor_images=os.listdir(image_dir+ '/yes')
 print("--------------------------------------\n")
