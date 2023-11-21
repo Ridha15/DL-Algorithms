@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import pathlib
 
 
-train_dir = pathlib.Path('artifacts/cleanedbrainimage/train')
-test_dir = pathlib.Path('artifacts/cleanedbrainimage/test')
+train_dir = pathlib.Path('CNN/tumor_detection/tumordata/Whole Dataset/TRAIN')
+test_dir = pathlib.Path('CNN/tumor_detection/tumordata/Whole Dataset/TEST')
 batch_size = 64
 img_height = 180
 img_width = 180

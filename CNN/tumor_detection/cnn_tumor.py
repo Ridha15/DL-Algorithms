@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from tqdm import tqdm
 
-image_dir='CNN/tumor_detection/brain_tumor_dataset'
+image_dir='CNN/tumor_detection/tumordata'
 no_tumor_images=os.listdir(image_dir+ '/no')
 yes_tumor_images=os.listdir(image_dir+ '/yes')
 print("--------------------------------------\n")
@@ -141,9 +141,9 @@ def make_prediction(img,model):
     else:
         print("No Tumor")
         
-make_prediction('artifacts/cleanedbrainimage/train/yes/y6.jpg',model)
+make_prediction('CNN/tumor_detection/tumordata/yes/y6.jpg',model)
 print("--------------------------------------\n")
-make_prediction('artifacts/cleanedbrainimage/train/no/no1.jpg',model)
+make_prediction('CNN/tumor_detection/tumordata/no/no21.jpg',model)
 print("--------------------------------------\n")
 
 

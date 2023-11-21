@@ -8,9 +8,9 @@ with open("README.md", "r", encoding="utf-8") as f:
 __version__ = "0.0.3"
 
 REPO_NAME = "DL-ALGORITHMS"
-AUTHOR_USER_NAME = "adityaiiitmk"
+AUTHOR_USER_NAME = "Ridha15"
 SRC_REPO = "DL-ALGORITHMS"
-AUTHOR_EMAIL = "aditya.s@duk.ac.in"
+AUTHOR_EMAIL = "ridha.ds22@duk.ac.in"
 
 
 HYPEN_E_DOT='-e .'
