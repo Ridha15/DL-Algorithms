@@ -33,6 +33,7 @@ MANIFEST
 *.spec
 LSTM/glove/
 GRU/glove/
+CNN/tumor_detection/tumordata
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
