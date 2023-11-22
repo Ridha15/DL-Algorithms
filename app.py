@@ -3,23 +3,20 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-col1, col2 = st.columns([1,1])
+col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.button('Sentiment Classification')
+    button1 = st.button('Sentiment Classification')
+
 with col2:
-    st.button('Tumor Detection')
+    button2 = st.button('Tumor Detection')
 
-tumor_detection_selected = st.button("Tumor detection")
 
-# Button for Sentiment Classification
-sentiment_classification_selected = st.button("Sentiment Classification")
 
-# Check which button is selected
-if tumor_detection_selected:
-    # Add Tumor Detection functionality here
+if button1:
     pass
-elif sentiment_classification_selected:
+
+if button2:
     model_type = st.radio("Select a Model", ["Perceptron", "Backpropagation", "DNN", "RNN", "LSTM"])
 
     # Load the selected model
