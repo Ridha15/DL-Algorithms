@@ -3,6 +3,8 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+col1, col2 = st.beta_columns(2)
+
 tumor_detection_selected = col1.button("Tumor Detection")
 
 # Button for Sentiment Classification
