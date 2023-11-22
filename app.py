@@ -3,12 +3,17 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-col1, col2 = st.beta_columns(2)
+col1, col2, col3 = st.columns([1,1])
 
-tumor_detection_selected = col1.button("Tumor Detection")
+with col1:
+    st.button('Sentiment Classification')
+with col2:
+    st.button('Tumor Detection')
+
+tumor_detection_selected = st.button("Tumor detection")
 
 # Button for Sentiment Classification
-sentiment_classification_selected = col2.button("Sentiment Classification")
+sentiment_classification_selected = st.button("Sentiment Classification")
 
 # Check which button is selected
 if tumor_detection_selected:
