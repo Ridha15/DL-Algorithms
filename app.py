@@ -1,45 +1,46 @@
 import streamlit as st
 import tensorflow as tf
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing import sequence
 from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load the trained LSTM model
-model_path = "models/lstm_model.h5"
-lstm_model = load_model(model_path)
+model = load_model("models/lstm_model.h5")
 
-# Tokenize the input text during app initialization
-top_words = 5000
+# Load the IMDB dataset and obtain the word index
+imdb_dataset = tf.keras.datasets.imdb
+(_, _), (x_test, _) = imdb_dataset.load_data()
+word_index = imdb_dataset.get_word_index()
+
+# Set the maximum review length
 max_review_length = 500
-tokenizer = Tokenizer(num_words=top_words)
-tokenizer.fit_on_texts(["placeholder"])  # Placeholder text for initialization
 
-# Function to preprocess text input
-def preprocess_text(text, tokenizer, max_length):
-    # Tokenize the text
-    tokenized_text = tokenizer.texts_to_sequences([text])
+# Reverse the word index to map indices back to words
+reverse_word_index = {value: key for key, value in word_index.items()}
 
-    # Pad the sequences
-    padded_text = sequence.pad_sequences(tokenized_text, maxlen=max_length)
-
-    return padded_text
+# Function to preprocess new reviews
+def preprocess_new_review(review_text):
+    words = review_text.lower().split()
+    indices = [word_index.get(word, 0) for word in words]
+    padded_sequence = pad_sequences([indices], maxlen=max_review_length)
+    return padded_sequence
 
 # Streamlit app
-st.title("Sentiment Analysis App")
+st.title("Movie Review Sentiment Analysis")
 
-# Get user input
-user_input = st.text_area("Enter a movie review:")
+# User input
+user_review = st.text_area("Enter your movie review:")
 
-if st.button("Predict"):
-    if user_input:
-        # Preprocess the input
-        processed_input = preprocess_text(user_input, tokenizer, max_review_length)
+if st.button("Predict Sentiment"):
+    if user_review:
+        # Preprocess the user input
+        processed_input = preprocess_new_review(user_review)
 
-        # Make a prediction
-        prediction = lstm_model.predict(processed_input)[0, 0]
+        # Make predictions
+        prediction = model.predict(processed_input)
 
         # Display the result
-        st.write(f"Sentiment: {'Positive' if prediction > 0.5 else 'Negative'}")
-        st.write(f"Confidence: {prediction:.2f}")
+        sentiment = "Positive" if prediction > 0.5 else "Negative"
+        st.success(f"The predicted sentiment is: {sentiment} (Confidence: {prediction[0][0]:.2f})")
+    else:
+        st.warning("Please enter a movie review.")
 
-# ...
