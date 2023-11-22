@@ -22,9 +22,9 @@ def preprocess_text(text, tokenizer, max_length):
 # Load the trained LSTM model
 model_path = "models/lstm_model.h5"
 lstm_model = load_model(model_path)
-
+top_words = 5000
 # Tokenize the input text during app initialization
-top_words = 500
+max_review_length = 500
 tokenizer = Tokenizer(num_words=top_words)
 tokenizer.fit_on_texts(["placeholder"])  # Placeholder text for initialization
 
@@ -36,7 +36,7 @@ user_input = st.text_area("Enter a movie review:")
 if st.button("Predict"):
     if user_input:
         # Preprocess the input
-        processed_input = preprocess_text(user_input, tokenizer, top_words)
+        processed_input = preprocess_text(user_input, tokenizer, max_review_length)
 
         # Make a prediction
         prediction = lstm_model.predict(processed_input)[0, 0]
