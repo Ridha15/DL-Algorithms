@@ -1,11 +1,18 @@
-
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing import sequence
 from tensorflow.keras.models import load_model
 
-# ...
+# Load the trained LSTM model
+model_path = "models/lstm_model.h5"
+lstm_model = load_model(model_path)
+
+# Tokenize the input text during app initialization
+top_words = 5000
+max_review_length = 500
+tokenizer = Tokenizer(num_words=top_words)
+tokenizer.fit_on_texts(["placeholder"])  # Placeholder text for initialization
 
 # Function to preprocess text input
 def preprocess_text(text, tokenizer, max_length):
@@ -17,18 +24,8 @@ def preprocess_text(text, tokenizer, max_length):
 
     return padded_text
 
-# ...
-
-# Load the trained LSTM model
-model_path = "models/lstm_model.h5"
-lstm_model = load_model(model_path)
-top_words = 5000
-# Tokenize the input text during app initialization
-max_review_length = 500
-tokenizer = Tokenizer(num_words=top_words)
-tokenizer.fit_on_texts(["placeholder"])  # Placeholder text for initialization
-
-# ...
+# Streamlit app
+st.title("Sentiment Analysis App")
 
 # Get user input
 user_input = st.text_area("Enter a movie review:")
