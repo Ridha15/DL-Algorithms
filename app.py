@@ -36,7 +36,7 @@ user_input = st.text_area("Enter a movie review:")
 if st.button("Predict"):
     if user_input:
         # Preprocess the input
-        processed_input = preprocess_text(user_input, tokenizer, max_review_length)
+        processed_input = preprocess_text(user_input, tokenizer, top_words)
 
         # Make a prediction
         prediction = lstm_model.predict(processed_input)[0, 0]
