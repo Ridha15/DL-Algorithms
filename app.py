@@ -1,22 +1,27 @@
-# app.py
-
 import streamlit as st
 from tensorflow.keras.models import load_model
 import numpy as np
 
-# Load your deep learning model
-model = load_model('models/dnn_model.h5')
+# Load the trained DNN model
+model = load_model("models/dnn_model.h5")
 
 # Streamlit UI
-st.title('Deep Learning Model Deployment')
-text = st.text("Enter a text")
+st.title("Iris Flower Classification App")
 
-if [text] is not None:
-    # Preprocess the image
-    # ...
+# Input form for user to input feature values
+sepal_length = st.slider("Sepal Length", 0.0, 10.0, 5.0)
+sepal_width = st.slider("Sepal Width", 0.0, 10.0, 5.0)
+petal_length = st.slider("Petal Length", 0.0, 10.0, 5.0)
+petal_width = st.slider("Petal Width", 0.0, 10.0, 5.0)
 
-    # Make predictions using your model
-    prediction = model.predict([text])
+# Make a prediction when the user clicks the "Predict" button
+if st.button("Predict"):
+    # Prepare the input features
+    input_features = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
 
-    # Display the prediction
-    st.write('Prediction:', prediction)
+    # Make a prediction
+    prediction = model.predict(input_features)
+
+    # Display the predicted class
+    predicted_class = np.argmax(prediction)
+    st.write(f"Predicted Class: {predicted_class}")
