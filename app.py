@@ -3,15 +3,16 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-# Streamlit app title
-st.title("Deep Learning Algorithms")
+tumor_detection_selected = col1.button("Tumor Detection")
 
-if st.button("Tumor Detection"):
+# Button for Sentiment Classification
+sentiment_classification_selected = col2.button("Sentiment Classification")
+
+# Check which button is selected
+if tumor_detection_selected:
     # Add Tumor Detection functionality here
     pass
-
-if st.button("Sentiment Classification"):
-    # Model selection for sentiment classification
+elif sentiment_classification_selected:
     model_type = st.radio("Select a Model", ["Perceptron", "Backpropagation", "DNN", "RNN", "LSTM"])
 
     # Load the selected model
@@ -67,6 +68,3 @@ if st.button("Sentiment Classification"):
         else:
             st.warning("Please enter a movie review")
 
-elif task == "Tumor Detection":
-    # Add Tumor Detection functionality here
-    pass
