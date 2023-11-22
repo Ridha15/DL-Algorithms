@@ -9,14 +9,14 @@ model = load_model('models/dnn_model.h5')
 
 # Streamlit UI
 st.title('Deep Learning Model Deployment')
-uploaded_file = st.text("Enter a text")
+text = st.text("Enter a text")
 
-if uploaded_file is not None:
+if text is not None:
     # Preprocess the image
     # ...
 
     # Make predictions using your model
-    prediction = model.predict(preprocessed_image)
+    prediction = model.predict(text)
 
     # Display the prediction
     st.write('Prediction:', prediction)
