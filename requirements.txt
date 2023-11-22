@@ -1,7 +1,6 @@
 
 tensorflow
 pandas
-sklearn
 scikit-learn
 tqdm
 imageio
