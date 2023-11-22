@@ -1,27 +1,48 @@
+
 import streamlit as st
+import tensorflow as tf
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing import sequence
 from tensorflow.keras.models import load_model
-import numpy as np
 
-# Load the trained DNN model
-model = load_model("models/dnn_model.h5")
+# ...
 
-# Streamlit UI
-st.title("Iris Flower Classification App")
+# Function to preprocess text input
+def preprocess_text(text, tokenizer, max_length):
+    # Tokenize the text
+    tokenized_text = tokenizer.texts_to_sequences([text])
 
-# Input form for user to input feature values
-sepal_length = st.slider("Sepal Length", 0.0, 10.0, 5.0)
-sepal_width = st.slider("Sepal Width", 0.0, 10.0, 5.0)
-petal_length = st.slider("Petal Length", 0.0, 10.0, 5.0)
-petal_width = st.slider("Petal Width", 0.0, 10.0, 5.0)
+    # Pad the sequences
+    padded_text = sequence.pad_sequences(tokenized_text, maxlen=max_length)
 
-# Make a prediction when the user clicks the "Predict" button
+    return padded_text
+
+# ...
+
+# Load the trained LSTM model
+model_path = "models/lstm_model.h5"
+lstm_model = load_model(model_path)
+
+# Tokenize the input text during app initialization
+top_words = 500
+tokenizer = Tokenizer(num_words=top_words)
+tokenizer.fit_on_texts(["placeholder"])  # Placeholder text for initialization
+
+# ...
+
+# Get user input
+user_input = st.text_area("Enter a movie review:")
+
 if st.button("Predict"):
-    # Prepare the input features
-    input_features = np.array([[sepal_length, sepal_width, petal_length, petal_width]])
+    if user_input:
+        # Preprocess the input
+        processed_input = preprocess_text(user_input, tokenizer, max_review_length)
 
-    # Make a prediction
-    prediction = model.predict(input_features)
+        # Make a prediction
+        prediction = lstm_model.predict(processed_input)[0, 0]
 
-    # Display the predicted class
-    predicted_class = np.argmax(prediction)
-    st.write(f"Predicted Class: {predicted_class}")
+        # Display the result
+        st.write(f"Sentiment: {'Positive' if prediction > 0.5 else 'Negative'}")
+        st.write(f"Confidence: {prediction:.2f}")
+
+# ...
