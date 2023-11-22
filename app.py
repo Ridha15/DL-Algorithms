@@ -6,10 +6,11 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 # Streamlit app title
 st.title("Deep Learning Algorithms")
 
-# Task selection
-task = st.radio("Select One", ["Tumor Detection", "Sentiment Classification"])
+if st.button("Tumor Detection"):
+    # Add Tumor Detection functionality here
+    pass
 
-if task == "Sentiment Classification":
+if st.button("Sentiment Classification"):
     # Model selection for sentiment classification
     model_type = st.radio("Select a Model", ["Perceptron", "Backpropagation", "DNN", "RNN", "LSTM"])
 
