@@ -3,7 +3,7 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-col1, col2, col3 = st.columns([1,1])
+col1, col2 = st.columns([1,1])
 
 with col1:
     st.button('Sentiment Classification')
