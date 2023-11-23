@@ -2,6 +2,7 @@ import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+import pickle
 
 col1, col2, col3 = st.columns(3)
 
@@ -13,23 +14,26 @@ with col2:
 
 
 
-if button1:
+if button2:
     pass
 
-if button2:
-    model_type = st.radio("Select a Model", ["Perceptron", "Backpropagation", "DNN", "RNN", "LSTM"])
+if button1:
+    model_type = st.radio("Select a Model", ["Perceptron", "Backpropagation", "DNN", "RNN", "LSTM","GRU"])
 
     # Load the selected model
     if model_type == "Perceptron":
-        model_path = "models/perceptron_model.h5"  # Replace with your actual path
+        model_path = "models/perceptron_model.pkl"  # Replace with your actual path
     elif model_type == "Backpropagation":
-        model_path = "models/backpropagation_model.h5"  # Replace with your actual path
+        model_path = "models/backprop_model.pkl"  # Replace with your actual path
     elif model_type == "DNN":
         model_path = "models/dnn_model.h5"  # Replace with your actual path
     elif model_type == "RNN":
         model_path = "models/rnn_model.h5"  # Replace with your actual path
     elif model_type == "LSTM":
         model_path = "models/lstm_model.h5"  # Replace with your actual path
+    elif model_type == "GRU":
+        model_path = "models/gru_model.h5"
+
 
     # Load the selected model
     model = load_model(model_path)
