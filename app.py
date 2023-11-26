@@ -21,20 +21,31 @@ button_sentiment_classification = st.button("Sentiment Classification")
 
 if button_tumor_detection:
     uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-    image = Image.open(uploaded_image)
-    plt.imshow(image)
-    plt.axis("off")
-    st.pyplot(plt)
+
+# Display the uploaded image using matplotlib
+    if uploaded_image is not None:
+        image = Image.open(uploaded_image)
+        plt.imshow(image)
+        plt.axis("off")
+        st.pyplot(plt)
+
+# Add a "Predict" button
     if st.button("Predict"):
         st.write("Predict button clicked")
-        model = load_model("models/cnn_model.h5")
-        # Preprocess the image for tumor detection
-        processed_image = preprocess_image(uploaded_image)
-        # Make the prediction
-        result = model.predict(processed_image)
-        # Display the result
-        if result[0][0] > 0.5:  # Assuming binary classification
-            st.write("Tumor Detected")
+
+        # Check if an image is uploaded before attempting to process it
+        if uploaded_image is not None:
+            model = load_model("models/cnn_model.h5")
+                # Preprocess the image for tumor detection
+            processed_image = preprocess_image(uploaded_image)
+                # Make the prediction
+            result = model.predict(processed_image)
+                # Display the result
+            if result[0][0] > 0.5:  # Assuming binary classification
+                st.write("Tumor Detected")
+            else:
+                st.write("No Tumor")
+            
         else:
-            st.write("No Tumor")
+            st.warning("Please upload an image before clicking 'Predict'")
 
