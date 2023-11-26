@@ -4,7 +4,7 @@ import numpy as np
 from tensorflow.keras.models import load_model
 
 # Function to preprocess image for tumor detection
-def preprocess_image(image_path, target_size=(128, 128)):
+def preprocess_image(image_path, target_size=(180, 180)):
     img = Image.open(image_path)
     img = img.resize(target_size)
     img = np.array(img) / 255.0  # Normalize pixel values to between 0 and 1
