@@ -24,16 +24,13 @@ def preprocess_image(image_path, target_size=(180, 180)):
 
 # Upload image only if the "Tumor Detection" button is clicked
 if button2:
-    st.write("hello")
     uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-    st.write("hello")
 
     # Display the uploaded image using matplotlib
     if uploaded_image is not None:
         image = Image.open(uploaded_image)
-        plt.imshow(image)
-        plt.axis("off")
-        st.pyplot(plt)
+        image = Image.open('imagefile')
+        st.image(image, caption="Uploaded image")
 
     # Add a "Predict" button
     if st.button("Predict"):
