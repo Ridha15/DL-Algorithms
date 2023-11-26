@@ -7,13 +7,8 @@ import numpy as np
 st.title("Deep Learning Algorithms")
 
 # Layout for buttons
-col1, col2 = st.columns(2)
-
-with col1:
-    button1 = st.button("Sentiment Classification")
-
-with col2:
-    button2 = st.button("Tumor Detection")
+button1 = st.button("Sentiment Classification")
+button2 = st.button("Tumor Detection")
 
 # Function to preprocess image for tumor detection
 def preprocess_image(image_path, target_size=(128, 128)):
