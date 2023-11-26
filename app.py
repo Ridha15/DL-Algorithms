@@ -16,11 +16,18 @@ def preprocess_image(image_path, target_size=(180, 180)):
 
 
 # Function to load model from URL
-def load_model_from_url(model_url):
-    response = requests.get(model_url)
+def load_model_from_google_drive(gdrive_file_id):
+    gdrive_url = f"https://drive.google.com/uc?id={gdrive_file_id}"
+    response = requests.get(gdrive_url)
     model_bytes = BytesIO(response.content)
     model = load_model(model_bytes)
     return model
+
+# Google Drive File ID for your model file
+model_gdrive_file_id = '1_mKNM-t6Do7fmXtzrsE9F5L9DliR1Yas'
+
+# Load the model
+
 # Main content
 st.title("Deep Learning Algorithms")
 
@@ -43,7 +50,7 @@ if selected_option == "Tumor Detection":
 
         # Check if an image is uploaded before attempting to process it
         if uploaded_image is not None:
-            model = load_model_from_url("https://drive.google.com/file/d/1_mKNM-t6Do7fmXtzrsE9F5L9DliR1Yas/view?usp=sharing")
+            model = load_model_from_google_drive(model_gdrive_file_id)
             img=cv2.imread(uploaded_image)
             img=Image.fromarray(img)
             img=img.resize((128,128))
