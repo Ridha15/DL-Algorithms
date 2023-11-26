@@ -23,10 +23,6 @@ def preprocess_image(image_path, target_size=(128, 128)):
     img = np.expand_dims(img, axis=0)
     return img
 
-# Main content based on button clicks
-if button1:
-    st.title("Sentiment Classification")
-    # Add your code for sentiment classification here
 
 if button2:
     st.title("Tumor Detection")
@@ -38,13 +34,18 @@ if button2:
         # Display the uploaded image
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
 
-        # Add a "Predict" button
+    # Add a "Predict" button in a separate column
+    col3 = st.column()
+    with col3:
         if st.button("Predict"):
+            st.write("Predict button clicked")  # Debugging statement
+
             # Preprocess the image
             processed_image = preprocess_image(uploaded_image)
 
             # Make the prediction
             result = model_cnn.predict(processed_image)
+            st.write(f"Prediction result: {result}")  # Debugging statement
 
             # Display the result
             if result[0][0] > 0.5:  # Assuming binary classification
