@@ -37,6 +37,4 @@ if button_tumor_detection:
             st.write("Tumor Detected")
         else:
             st.write("No Tumor")
-    elif button_sentiment_classification:
-        st.write("Sentiment Classification logic here")
 
