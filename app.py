@@ -4,46 +4,46 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-import cv2
-
-st.title("Deep Learning Algorithms")
-
-# Layout for buttons
-button1 = st.button("Sentiment Classification")
-button2 = st.button("Tumor Detection")
 
 # Function to preprocess image for tumor detection
-def make_prediction(img,model):
-    img=cv2.imread(img)
-    img=Image.fromarray(img)
-    img=img.resize((180,180))
-    img=np.array(img)
-    input_img = np.expand_dims(img, axis=0)
-    res = model.predict(input_img)
-    if res[0][0] < 0.5: 
-        st.write("Tumor Detected")
-    else:
-        st.write("No Tumor")
-# Main content based on button clicks
-if button1:
-    st.title("Sentiment Classification")
-    # Add your code for sentiment classification here
+def preprocess_image(image_path, target_size=(180, 180)):
+    img = Image.open(image_path)
+    img = img.resize(target_size)
+    img = np.array(img) / 255.0  # Normalize pixel values to between 0 and 1
+    img = np.expand_dims(img, axis=0)
+    return img
 
-if button2:
-    st.title("Tumor Detection")
-    uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+# Main content
+st.title("Tumor Detection")
 
-    if uploaded_image is not None:
+# Upload image
+uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+
+if uploaded_image is not None:
+    # Display the uploaded image using matplotlib
+    image = Image.open(uploaded_image)
+    plt.imshow(image)
+    plt.axis("off")
+    st.pyplot(plt)
+
+    # Add a "Predict" button
+    if st.button("Predict"):
+        st.write("Predict button clicked")
+
+        # Load the model
         model_cnn = load_model("models/cnn_model.h5")
 
-        st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
-        # Add debugging statements
-        st.write("Image displayed successfully")
+        # Preprocess the image
+        processed_image = preprocess_image(uploaded_image)
 
-        # Add a "Predict" button
-        if st.button("Predict"):
-            make_prediction(uploaded_image,model_cnn)
+        # Make the prediction
+        result = model_cnn.predict(processed_image)
 
+        # Display the result
+        if result[0][0] > 0.5:  # Assuming binary classification
+            st.write("Tumor Detected")
+        else:
+            st.write("No Tumor")
 
 if button1:
     st.title("Sentiment Classification")
