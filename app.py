@@ -14,12 +14,12 @@ def preprocess_image(image_path, target_size=(180, 180)):
 # Main content
 st.title("Deep Learning Algorithms")
 
-# Layout for buttons
-button_tumor_detection = st.button("Tumor Detection")
-button_sentiment_classification = st.button("Sentiment Classification")
+selected_option = st.radio("Choose an option", ["Tumor Detection", "Sentiment Classification"])
 
-# Upload image if "Tumor Detection" button is clicked
-if button_tumor_detection:
+# Upload image if "Tumor Detection" is selected
+if selected_option == "Tumor Detection":
+
+
     uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
     # Display the uploaded image
