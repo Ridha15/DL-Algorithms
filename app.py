@@ -3,6 +3,7 @@ from PIL import Image
 import numpy as np
 from tensorflow.keras.models import load_model
 from io import BytesIO
+import cv2
 
 # Function to preprocess image for tumor detection
 def preprocess_image(image_path, target_size=(180, 180)):
@@ -42,14 +43,15 @@ if selected_option == "Tumor Detection":
         # Check if an image is uploaded before attempting to process it
         if uploaded_image is not None:
             model = load_model_from_url("https://drive.google.com/file/d/1_mKNM-t6Do7fmXtzrsE9F5L9DliR1Yas/view?usp=sharing")
-            # Preprocess the image for tumor detection
-            processed_image = preprocess_image(uploaded_image)
-            # Make the prediction
-            result = model.predict(processed_image)
-            # Display the result
-            if result[0][0] > 0.5:  # Assuming binary classification
-                st.write("Tumor Detected")
+            img=cv2.imread(uploaded_image)
+            img=Image.fromarray(img)
+            img=img.resize((128,128))
+            img=np.array(img)
+            input_img = np.expand_dims(img, axis=0)
+            res = model.predict(input_img)
+            if res:
+                print("Tumor Detected")
             else:
-                st.write("No Tumor")
+                print("No Tumor")
         else:
             st.warning("Please upload an image before clicking 'Predict'")
