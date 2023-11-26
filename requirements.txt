@@ -2,11 +2,10 @@
 tensorflow
 pandas
 numpy
-opencv-python-headless
+opencv-python-headless 
 Pillow
 scikit-learn
 tqdm
 imageio
 seaborn
-opencv-python
 -e .
