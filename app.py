@@ -19,8 +19,8 @@ st.title("Deep Learning Algorithms")
 button_tumor_detection = st.button("Tumor Detection")
 button_sentiment_classification = st.button("Sentiment Classification")
 
-# Upload image and make prediction based on the button clicked
-uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+if button_tumor_detection:
+    uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 # Display the uploaded image using matplotlib
 if uploaded_image is not None:
