@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 import numpy as np
 from tensorflow.keras.models import load_model
+from io import BytesIO
 
 # Function to preprocess image for tumor detection
 def preprocess_image(image_path, target_size=(180, 180)):
@@ -11,6 +12,13 @@ def preprocess_image(image_path, target_size=(180, 180)):
     img = np.expand_dims(img, axis=0)
     return img
 
+
+# Function to load model from URL
+def load_model_from_url(model_url):
+    response = requests.get(model_url)
+    model_bytes = BytesIO(response.content)
+    model = load_model(model_bytes)
+    return model
 # Main content
 st.title("Deep Learning Algorithms")
 
@@ -33,7 +41,7 @@ if selected_option == "Tumor Detection":
 
         # Check if an image is uploaded before attempting to process it
         if uploaded_image is not None:
-            model = load_model("https://drive.google.com/file/d/1_mKNM-t6Do7fmXtzrsE9F5L9DliR1Yas/view?usp=sharing")
+            model = load_model_from_url("https://drive.google.com/file/d/1_mKNM-t6Do7fmXtzrsE9F5L9DliR1Yas/view?usp=sharing")
             # Preprocess the image for tumor detection
             processed_image = preprocess_image(uploaded_image)
             # Make the prediction
