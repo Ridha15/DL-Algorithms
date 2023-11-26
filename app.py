@@ -45,7 +45,7 @@ if uploaded_image is not None:
         else:
             st.write("No Tumor")
 
-if button1:
+"""if button1:
     st.title("Sentiment Classification")
     model_type = st.radio("Select a Model", ["Perceptron", "Backpropagation", "DNN", "RNN", "LSTM","GRU"])
 
@@ -134,4 +134,4 @@ if button1:
             st.success(f"The predicted sentiment is: {sentiment} (Confidence: {prediction[0][0]:.2f})")
         else:
             st.warning("Please enter a movie review")
-
+"""
