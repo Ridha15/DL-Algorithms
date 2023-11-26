@@ -3,7 +3,7 @@ tensorflow
 pandas
 numpy
 opencv-python
-PIL
+Pillow
 scikit-learn
 tqdm
 imageio
