@@ -26,7 +26,7 @@ if selected_option == "Tumor Detection":
     if uploaded_image is not None:
         
         image = Image.open(uploaded_image)
-        st.image(image, caption="Uploaded Image", use_column_width=True,width=100)
+        st.image(image, caption="Uploaded Image", use_column_width=True,width=10)
 
     # Add a "Predict" button
     if st.button("Predict"):
