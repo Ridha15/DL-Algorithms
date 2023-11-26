@@ -4,6 +4,7 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from io import BytesIO
 import cv2
+import requests
 
 # Function to preprocess image for tumor detection
 def preprocess_image(image_path, target_size=(180, 180)):
