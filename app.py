@@ -23,6 +23,10 @@ def preprocess_image(image_path, target_size=(128, 128)):
     img = np.expand_dims(img, axis=0)
     return img
 
+# Main content based on button clicks
+if button1:
+    st.title("Sentiment Classification")
+    # Add your code for sentiment classification here
 
 if button2:
     st.title("Tumor Detection")
@@ -34,9 +38,7 @@ if button2:
         # Display the uploaded image
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
 
-    # Add a "Predict" button in a separate column
-    col3 = st.columns(1)
-    with col3:
+        # Add a "Predict" button
         if st.button("Predict"):
             st.write("Predict button clicked")  # Debugging statement
 
@@ -52,7 +54,6 @@ if button2:
                 st.write("Tumor Detected")
             else:
                 st.write("No Tumor")
-
 
     
 
