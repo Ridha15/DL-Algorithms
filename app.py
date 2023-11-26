@@ -4,33 +4,33 @@ import numpy as np
 from tensorflow.keras.models import load_model
 import cv2
 
-from transformers import AutoModelForImageClassification, AutoImageFeatureExtractor
+from transformers import TFAutoModelForImageClassification
+
+# Function to load the model from Hugging Face Model Hub
+def load_model_from_hub(model_url):
+    model = TFAutoModelForImageClassification.from_pretrained(model_url)
+    return model
+model_url = "https://huggingface.co/Ridha15/cnn_model/blob/main/cnn_model.h5"
+
+# Load the model
+
 
 import requests
 
 
 # Function to load the model
-def load_model():
-    model_name = "Ridha15/cnn_model"  # Replace with your Hugging Face repo name
-    model = AutoModelForImageClassification.from_pretrained(model_name)
-    feature_extractor = AutoImageFeatureExtractor.from_pretrained(model_name)
-    return model, feature_extractor
 
 
-model, feature_extractor = load_model()
+
 
 # User input for image upload
 uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if st.button("Predict"):
     if uploaded_image:
-        # Load and preprocess the image
-        image = Image.open(uploaded_image)
-        inputs = feature_extractor(images=image, return_tensors="pt")
+        model = load_model_from_hub(model_url)
+        st.write("great")
         
-        # Make predictions
-        outputs = model(**inputs)
-        predicted_class = np.argmax(outputs.logits[0])
         
         # Display the result
         st.success(f"The predicted class is: {predicted_class}")
