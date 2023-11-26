@@ -20,17 +20,23 @@ with col2:
 
 if button2:
     img = st.file_uploader("Choose an image...", type="jpg")
-    model = load_model("models/cnn_model.h5")
-    img=cv2.imread(img)
-    img=Image.fromarray(img)
-    img=img.resize((128,128))
-    img=np.array(img)
-    input_img = np.expand_dims(img, axis=0)
-    res = model.predict(input_img)
-    if res:
-        st.write("Tumor Detected")
+    if img is not None:
+        model = load_model("models/cnn_model.h5")
+        img = cv2.imread(img)
+        img = Image.fromarray(img)
+        img = img.resize((128, 128))
+        img = np.array(img)
+        input_img = np.expand_dims(img, axis=0)
+        # Assuming your model predicts binary (0 or 1)
+        prediction = model.predict(input_img)[0][0]
+        threshold = 0.5  # You might need to adjust this threshold
+        if prediction > threshold:
+            st.write("Tumor Detected")
+        else:
+            st.write("No Tumor")
     else:
-        st.write("No Tumor")
+        st.warning("Please upload an image.")
+
 
     
 
@@ -45,7 +51,7 @@ if button1:
         if data == "Movie Review":
             text = st.text_input("Enter your text")
             model = load_model(model_path)
-            imdb_word_index = tf.keras.datasets.imdb.get_word_index()
+            word_index = tf.keras.datasets.imdb.get_word_index()
             max_len = 100
             tokens = [word_index[word] if word in word_index and word_index[word] < 10000 else 0 for word in text.split()]
             padded_sequence = pad_sequences([tokens], maxlen=max_len)
