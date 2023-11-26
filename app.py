@@ -2,14 +2,12 @@ import streamlit as st
 from PIL import Image
 import numpy as np
 from tensorflow.keras.models import load_model
-import cv2
 
 # Function to preprocess image for tumor detection
-def preprocess_image(img):
-    img=cv2.imread(img)
-    img=Image.fromarray(img)
-    img=img.resize((128,128))
-    img=np.array(img)
+def preprocess_image(image_path, target_size=(128, 128)):
+    img = Image.open(image_path)
+    img = img.resize(target_size)
+    img = np.array(img) / 255.0  # Normalize pixel values to between 0 and 1
     img = np.expand_dims(img, axis=0)
     return img
 
@@ -28,7 +26,7 @@ if selected_option == "Tumor Detection":
     if uploaded_image is not None:
         
         image = Image.open(uploaded_image)
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+        st.image(image, caption="Uploaded Image", use_column_width=True,width=100)
 
     # Add a "Predict" button
     if st.button("Predict"):
