@@ -22,27 +22,26 @@ def preprocess_image(image_path, target_size=(180, 180)):
     return img
 
 
-
 # Upload image only if the "Tumor Detection" button is clicked
 if button2:
-    st.title("Tumor Detection")
     uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
+    # Display the uploaded image using matplotlib
     if uploaded_image is not None:
-        # Display the uploaded image using matplotlib
         image = Image.open(uploaded_image)
         plt.imshow(image)
         plt.axis("off")
         st.pyplot(plt)
 
-        # Add a "Predict" button
-        if st.button("Predict"):
-            st.write("Predict button clicked")
+    # Add a "Predict" button
+    if st.button("Predict"):
+        st.write("Predict button clicked")
 
-            # Load the model
-            model_cnn = load_model("models/cnn_model.h5")
+        # Load the model
+        model_cnn = load_model("models/cnn_model.h5")
 
-            # Preprocess the image
+        # Preprocess the image
+        if uploaded_image is not None:
             processed_image = preprocess_image(uploaded_image)
 
             # Make the prediction
@@ -53,7 +52,6 @@ if button2:
                 st.write("Tumor Detected")
             else:
                 st.write("No Tumor")
-
 
 if button1:
     st.title("Sentiment Classification")
