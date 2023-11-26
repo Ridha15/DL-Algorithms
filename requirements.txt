@@ -1,6 +1,9 @@
 
 tensorflow
 pandas
+numpy
+cv2
+PIL
 scikit-learn
 tqdm
 imageio
