@@ -1,4 +1,4 @@
-h5py
+transformers
 tensorflow
 pandas
 numpy
