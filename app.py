@@ -1,7 +1,6 @@
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.image import img_to_array
 from PIL import Image
 import numpy as np
 
@@ -17,17 +16,12 @@ with col2:
     button2 = st.button("Tumor Detection")
 
 # Function to preprocess image for tumor detection
-def preprocess_image(image, target_size=(128, 128)):
-    image = image.resize(target_size)
-    image = img_to_array(image)
-    image = np.expand_dims(image, axis=0)
-    return image
-
-# Function to make tumor prediction
-def predict_tumor(model, image):
-    prediction = model.predict(image)[0][0]
-    threshold = 0.5  # You might need to adjust this threshold
-    return prediction > threshold
+def preprocess_image(image_path, target_size=(128, 128)):
+    img = Image.open(image_path)
+    img = img.resize(target_size)
+    img = np.array(img) / 255.0  # Normalize pixel values to between 0 and 1
+    img = np.expand_dims(img, axis=0)
+    return img
 
 # Main content based on button clicks
 if button1:
@@ -47,18 +41,16 @@ if button2:
         # Add a "Predict" button
         if st.button("Predict"):
             # Preprocess the image
-            img = Image.open(uploaded_image)
-            processed_image = preprocess_image(img)
+            processed_image = preprocess_image(uploaded_image)
 
             # Make the prediction
-            result = predict_tumor(model_cnn, processed_image)
+            result = model_cnn.predict(processed_image)
 
             # Display the result
-            if result:
+            if result[0][0] > 0.5:  # Assuming binary classification
                 st.write("Tumor Detected")
             else:
                 st.write("No Tumor")
-
 
 
     
