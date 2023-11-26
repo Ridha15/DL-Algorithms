@@ -21,9 +21,6 @@ button_sentiment_classification = st.button("Sentiment Classification")
 
 if button_tumor_detection:
     uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-
-# Display the uploaded image using matplotlib
-if uploaded_image is not None:
     image = Image.open(uploaded_image)
     plt.imshow(image)
     plt.axis("off")
