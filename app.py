@@ -1,46 +1,63 @@
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-import pickle
-import pandas as pd
-from sklearn.model_selection import train_test_split
-import cv2
+from tensorflow.keras.preprocessing.image import img_to_array
 from PIL import Image
 import numpy as np
 
-col1, col2, col3 = st.columns(3)
+st.title("Deep Learning Algorithms")
+
+# Layout for buttons
+col1, col2 = st.columns(2)
 
 with col1:
-    button1 = st.button('Sentiment Classification')
+    button1 = st.button("Sentiment Classification")
 
 with col2:
-    button2 = st.button('Tumor Detection')
+    button2 = st.button("Tumor Detection")
 
+# Function to preprocess image for tumor detection
+def preprocess_image(image, target_size=(128, 128)):
+    image = image.resize(target_size)
+    image = img_to_array(image)
+    image = np.expand_dims(image, axis=0)
+    return image
+
+# Function to make tumor prediction
+def predict_tumor(model, image):
+    prediction = model.predict(image)[0][0]
+    threshold = 0.5  # You might need to adjust this threshold
+    return prediction > threshold
+
+# Main content based on button clicks
+if button1:
+    st.title("Sentiment Classification")
+    # Add your code for sentiment classification here
 
 if button2:
-    img = st.file_uploader("Choose an image...", type="jpg")
-    if img is not None:
-        model = load_model("models/cnn_model.h5")
-        uploaded_image = cv2.imread(img)
+    st.title("Tumor Detection")
+    uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+
+    if uploaded_image is not None:
+        model_cnn = load_model("models/cnn_model.h5")
+
+        # Display the uploaded image
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
-        
+
         # Add a "Predict" button
         if st.button("Predict"):
-            img = Image.fromarray(uploaded_image)
-            img = img.resize((128, 128))
-            img = np.array(img)
-            input_img = np.expand_dims(img, axis=0)
-            
-            # Assuming your model predicts binary (0 or 1)
-            prediction = model.predict(input_img)[0][0]
-            threshold = 0.5  # You might need to adjust this threshold
-            if prediction > threshold:
+            # Preprocess the image
+            img = Image.open(uploaded_image)
+            processed_image = preprocess_image(img)
+
+            # Make the prediction
+            result = predict_tumor(model_cnn, processed_image)
+
+            # Display the result
+            if result:
                 st.write("Tumor Detected")
             else:
                 st.write("No Tumor")
-    else:
-        st.warning("Please upload an image.")
 
 
 
