@@ -18,7 +18,7 @@ def preprocess_image(image_path, target_size=(180, 180)):
     img = np.expand_dims(img, axis=0)
     return img
 
-import streamlit as st
+ import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 from PIL import Image
