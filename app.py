@@ -18,7 +18,9 @@ with col2:
     button2 = st.button('Tumor Detection')
 
 
-def make_prediction(img,model):
+if button2:
+    img = st.file_uploader("Choose an image...", type="jpg")
+    model = load_model("models/cnn_model.h5")
     img=cv2.imread(img)
     img=Image.fromarray(img)
     img=img.resize((128,128))
@@ -29,10 +31,6 @@ def make_prediction(img,model):
         st.write("Tumor Detected")
     else:
         st.write("No Tumor")
-if button2:
-    uploaded_file = st.file_uploader("Choose an image...", type="jpg")
-    model = load_model("models/cnn_model.h5")
-    make_prediction(uploaded_file,model)
 
     
 
@@ -42,8 +40,18 @@ if button1:
 
     # Load the selected model
     if model_type == "Perceptron":
-        model_path = "models/perceptron_model.pkl"
-        
+        model_path = "models/perceptron_model.h5"
+        data = st.radio("What type of text you want to try on?",["SMS","Movie Review"])
+        if data == "Movie Review":
+            text = st.text_input("Enter your text")
+            model = load_model(model_path)
+            imdb_word_index = tf.keras.datasets.imdb.get_word_index()
+            max_len = 100
+            tokens = [word_index[word] if word in word_index and word_index[word] < 10000 else 0 for word in text.split()]
+            padded_sequence = pad_sequences([tokens], maxlen=max_len)
+            prediction = model.predict(padded_sequence)
+            st.write(f"Prediction: {prediction}")
+
     elif model_type == "Backpropagation":
         model_path = "models/backprop_model.pkl"  # Replace with your actual path
     elif model_type == "DNN":
