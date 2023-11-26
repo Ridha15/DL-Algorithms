@@ -5,20 +5,14 @@ from tensorflow.keras.models import load_model
 import cv2
 
 from transformers import TFAutoModelForImageClassification
-
-# Function to load the model from Hugging Face Model Hub
 def load_model_from_hub(model_url):
     model = TFAutoModelForImageClassification.from_pretrained(model_url)
     return model
+
+# Specify the URL of your Hugging Face model
 model_url = "https://huggingface.co/Ridha15/cnn_model/blob/main/cnn_model.h5"
 
 # Load the model
-
-
-import requests
-
-
-# Function to load the model
 
 
 
