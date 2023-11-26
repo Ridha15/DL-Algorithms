@@ -15,7 +15,6 @@ def preprocess_image(image_path, target_size=(180, 180)):
     return img
 
 
-# Function to load model from URL
 def load_model_from_google_drive(gdrive_file_id):
     gdrive_url = f"https://drive.google.com/uc?id={gdrive_file_id}"
     response = requests.get(gdrive_url)
@@ -25,6 +24,9 @@ def load_model_from_google_drive(gdrive_file_id):
 
 # Google Drive File ID for your model file
 model_gdrive_file_id = '1_mKNM-t6Do7fmXtzrsE9F5L9DliR1Yas'
+
+# Load the model
+
 
 # Load the model
 
