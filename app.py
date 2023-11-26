@@ -33,7 +33,7 @@ if selected_option == "Tumor Detection":
 
         # Check if an image is uploaded before attempting to process it
         if uploaded_image is not None:
-            model = load_model("models/cnn_model.h5")
+            model = load_model("https://drive.google.com/file/d/1_mKNM-t6Do7fmXtzrsE9F5L9DliR1Yas/view?usp=sharing")
             # Preprocess the image for tumor detection
             processed_image = preprocess_image(uploaded_image)
             # Make the prediction
