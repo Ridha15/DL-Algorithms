@@ -2,7 +2,7 @@
 tensorflow
 pandas
 numpy
-opencv-python
+opencv-python-headless
 Pillow
 scikit-learn
 tqdm
