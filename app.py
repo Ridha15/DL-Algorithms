@@ -25,13 +25,8 @@ if button_tumor_detection:
     plt.imshow(image)
     plt.axis("off")
     st.pyplot(plt)
-
-# Add a "Predict" button
-if st.button("Predict"):
-    st.write("Predict button clicked")
-
-    # Load the appropriate model based on the button clicked
-    if button_tumor_detection:
+    if st.button("Predict"):
+        st.write("Predict button clicked")
         model = load_model("models/cnn_model.h5")
         # Preprocess the image for tumor detection
         processed_image = preprocess_image(uploaded_image)
