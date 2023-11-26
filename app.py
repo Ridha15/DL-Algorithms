@@ -32,7 +32,7 @@ if st.button("Predict"):
         st.warning("Please upload an image")
 
 # Main content
-st.title("Deep Learning Algorithms")
+"""st.title("Deep Learning Algorithms")
 
 selected_option = st.radio("Choose an option", ["Tumor Detection", "Sentiment Classification"])
 
@@ -63,4 +63,4 @@ if selected_option == "Tumor Detection":
             # Display the result
             st.success(f"The predicted class is: {predicted_class}")
         else:
-            st.warning("Please upload an image")
+            st.warning("Please upload an image")"""
