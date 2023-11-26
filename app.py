@@ -5,6 +5,11 @@ from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
 
+st.title("Deep Learning Algorithms")
+
+# Layout for buttons
+button1 = st.button("Sentiment Classification")
+button2 = st.button("Tumor Detection")
 # Function to preprocess image for tumor detection
 def preprocess_image(image_path, target_size=(180, 180)):
     img = Image.open(image_path)
@@ -13,39 +18,39 @@ def preprocess_image(image_path, target_size=(180, 180)):
     img = np.expand_dims(img, axis=0)
     return img
 
-# Main content
-st.title("Tumor Detection")
+if button2:# Main content
+    st.title("Tumor Detection")
 
-# Upload image
-uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+    # Upload image
+    uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
-if uploaded_image is not None:
-    # Display the uploaded image using matplotlib
-    image = Image.open(uploaded_image)
-    plt.imshow(image)
-    plt.axis("off")
-    st.pyplot(plt)
+    if uploaded_image is not None:
+        # Display the uploaded image using matplotlib
+        image = Image.open(uploaded_image)
+        plt.imshow(image)
+        plt.axis("off")
+        st.pyplot(plt)
 
-    # Add a "Predict" button
-    if st.button("Predict"):
-        st.write("Predict button clicked")
+        # Add a "Predict" button
+        if st.button("Predict"):
+            st.write("Predict button clicked")
 
-        # Load the model
-        model_cnn = load_model("models/cnn_model.h5")
+            # Load the model
+            model_cnn = load_model("models/cnn_model.h5")
 
-        # Preprocess the image
-        processed_image = preprocess_image(uploaded_image)
+            # Preprocess the image
+            processed_image = preprocess_image(uploaded_image)
 
-        # Make the prediction
-        result = model_cnn.predict(processed_image)
+            # Make the prediction
+            result = model_cnn.predict(processed_image)
 
-        # Display the result
-        if result[0][0] > 0.5:  # Assuming binary classification
-            st.write("Tumor Detected")
-        else:
-            st.write("No Tumor")
+            # Display the result
+            if result[0][0] > 0.5:  # Assuming binary classification
+                st.write("Tumor Detected")
+            else:
+                st.write("No Tumor")
 
-"""if button1:
+if button1:
     st.title("Sentiment Classification")
     model_type = st.radio("Select a Model", ["Perceptron", "Backpropagation", "DNN", "RNN", "LSTM","GRU"])
 
@@ -134,4 +139,4 @@ if uploaded_image is not None:
             st.success(f"The predicted sentiment is: {sentiment} (Confidence: {prediction[0][0]:.2f})")
         else:
             st.warning("Please enter a movie review")
-"""
+
