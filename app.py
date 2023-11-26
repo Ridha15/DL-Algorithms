@@ -18,10 +18,30 @@ def preprocess_image(image_path, target_size=(180, 180)):
     img = np.expand_dims(img, axis=0)
     return img
 
-if button2:# Main content
-    st.title("Tumor Detection")
+import streamlit as st
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
 
-    # Upload image
+# Function to preprocess image for tumor detection
+def preprocess_image(image_path, target_size=(180, 180)):
+    img = Image.open(image_path)
+    img = img.resize(target_size)
+    img = np.array(img) / 255.0  # Normalize pixel values to between 0 and 1
+    img = np.expand_dims(img, axis=0)
+    return img
+
+# Main content
+st.title("Tumor Detection")
+
+# Layout for buttons
+button1 = st.button("Sentiment Classification")
+button2 = st.button("Tumor Detection")
+
+# Upload image only if the "Tumor Detection" button is clicked
+if button2:
     uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
     if uploaded_image is not None:
@@ -49,6 +69,7 @@ if button2:# Main content
                 st.write("Tumor Detected")
             else:
                 st.write("No Tumor")
+
 
 if button1:
     st.title("Sentiment Classification")
