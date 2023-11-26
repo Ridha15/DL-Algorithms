@@ -5,6 +5,7 @@ from tensorflow.keras.models import load_model
 from io import BytesIO
 import cv2
 import requests
+import h5py
 
 # Function to preprocess image for tumor detection
 def preprocess_image(image_path, target_size=(180, 180)):
@@ -14,26 +15,19 @@ def preprocess_image(image_path, target_size=(180, 180)):
     img = np.expand_dims(img, axis=0)
     return img
 
-import streamlit as st
-import requests
-from io import BytesIO
-import tempfile
-from tensorflow.keras.models import load_model
 
-# Function to load model from Google Drive link
 def load_model_from_google_drive(gdrive_file_id):
     gdrive_url = f"https://drive.google.com/uc?id={gdrive_file_id}"
     response = requests.get(gdrive_url)
     
-    # Save the model to a temporary file
-    temp_model_file = tempfile.NamedTemporaryFile(delete=False)
-    temp_model_file.write(response.content)
-    temp_model_file.close()
-
-    # Load the model from the temporary file
-    model = load_model(temp_model_file.name)
+    # Load the model from BytesIO using h5py
+    with h5py.File(BytesIO(response.content), 'r') as f:
+        model = load_model(f)
 
     return model
+
+# Google Drive File ID for your model file
+model_gdrive_file_id = '1_mKNM-t6Do7fmXtzrsE9F5L9DliR1Yas'
 
 # Google Drive File ID for your model file
 model_gdrive_file_id = '1_mKNM-t6Do7fmXtzrsE9F5L9DliR1Yas'
