@@ -4,7 +4,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import pickle
 import pandas as pd
-from sklearn.preprocessing import train_test_split
+from sklearn.model_selection import train_test_split
 import cv2
 from PIL import Image
 import numpy as np
