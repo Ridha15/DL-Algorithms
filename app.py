@@ -37,6 +37,9 @@ if button2:
         plt.axis("off")
         st.pyplot(plt)
 
+        # Add debugging statements
+        st.write("Image displayed successfully")
+
         # Add a "Predict" button
         if st.button("Predict"):
             st.write("Predict button clicked")  # Debugging statement
