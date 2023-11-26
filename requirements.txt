@@ -8,4 +8,5 @@ scikit-learn
 tqdm
 imageio
 seaborn
+matplotlib
 -e .

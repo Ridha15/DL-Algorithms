@@ -3,6 +3,7 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from PIL import Image
 import numpy as np
+import matplotlib.pyplot as plt
 
 st.title("Deep Learning Algorithms")
 
@@ -30,8 +31,11 @@ if button2:
     if uploaded_image is not None:
         model_cnn = load_model("models/cnn_model.h5")
 
-        # Display the uploaded image
-        st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
+        # Display the uploaded image using matplotlib
+        image = Image.open(uploaded_image)
+        plt.imshow(image)
+        plt.axis("off")
+        st.pyplot(plt)
 
         # Add a "Predict" button
         if st.button("Predict"):
@@ -50,7 +54,6 @@ if button2:
             else:
                 st.write("No Tumor")
 
-    
 
 if button1:
     st.title("Sentiment Classification")
