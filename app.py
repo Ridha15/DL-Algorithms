@@ -22,20 +22,26 @@ if button2:
     img = st.file_uploader("Choose an image...", type="jpg")
     if img is not None:
         model = load_model("models/cnn_model.h5")
-        img = cv2.imread(img)
-        img = Image.fromarray(img)
-        img = img.resize((128, 128))
-        img = np.array(img)
-        input_img = np.expand_dims(img, axis=0)
-        # Assuming your model predicts binary (0 or 1)
-        prediction = model.predict(input_img)[0][0]
-        threshold = 0.5  # You might need to adjust this threshold
-        if prediction > threshold:
-            st.write("Tumor Detected")
-        else:
-            st.write("No Tumor")
+        uploaded_image = cv2.imread(img)
+        st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
+        
+        # Add a "Predict" button
+        if st.button("Predict"):
+            img = Image.fromarray(uploaded_image)
+            img = img.resize((128, 128))
+            img = np.array(img)
+            input_img = np.expand_dims(img, axis=0)
+            
+            # Assuming your model predicts binary (0 or 1)
+            prediction = model.predict(input_img)[0][0]
+            threshold = 0.5  # You might need to adjust this threshold
+            if prediction > threshold:
+                st.write("Tumor Detected")
+            else:
+                st.write("No Tumor")
     else:
         st.warning("Please upload an image.")
+
 
 
     
