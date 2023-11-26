@@ -4,6 +4,7 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2
 
 st.title("Deep Learning Algorithms")
 
@@ -12,13 +13,17 @@ button1 = st.button("Sentiment Classification")
 button2 = st.button("Tumor Detection")
 
 # Function to preprocess image for tumor detection
-def preprocess_image(image_path, target_size=(128, 128)):
-    img = Image.open(image_path)
-    img = img.resize(target_size)
-    img = np.array(img) / 255.0  # Normalize pixel values to between 0 and 1
-    img = np.expand_dims(img, axis=0)
-    return img
-
+def make_prediction(img,model):
+    img=cv2.imread(img)
+    img=Image.fromarray(img)
+    img=img.resize((180,180))
+    img=np.array(img)
+    input_img = np.expand_dims(img, axis=0)
+    res = model.predict(input_img)
+    if res[0][0] < 0.5: 
+        st.write("Tumor Detected")
+    else:
+        st.write("No Tumor")
 # Main content based on button clicks
 if button1:
     st.title("Sentiment Classification")
@@ -31,26 +36,13 @@ if button2:
     if uploaded_image is not None:
         model_cnn = load_model("models/cnn_model.h5")
 
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+        st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
         # Add debugging statements
         st.write("Image displayed successfully")
 
         # Add a "Predict" button
         if st.button("Predict"):
-            st.write("Predict button clicked")  # Debugging statement
-
-            # Preprocess the image
-            processed_image = preprocess_image(uploaded_image)
-
-            # Make the prediction
-            result = model_cnn.predict(processed_image)
-            st.write(f"Prediction result: {result}")  # Debugging statement
-
-            # Display the result
-            if result[0][0] > 0.5:  # Assuming binary classification
-                st.write("Tumor Detected")
-            else:
-                st.write("No Tumor")
+            make_prediction(uploaded_image,model_cnn)
 
 
 if button1:
