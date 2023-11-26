@@ -5,6 +5,9 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import pickle
 import pandas as pd
 from sklearn.preprocessing import train_test_split
+import cv2
+from PIL import Image
+import numpy as np
 
 col1, col2, col3 = st.columns(3)
 
@@ -15,9 +18,23 @@ with col2:
     button2 = st.button('Tumor Detection')
 
 
-
+def make_prediction(img,model):
+    img=cv2.imread(img)
+    img=Image.fromarray(img)
+    img=img.resize((128,128))
+    img=np.array(img)
+    input_img = np.expand_dims(img, axis=0)
+    res = model.predict(input_img)
+    if res:
+        st.write("Tumor Detected")
+    else:
+        st.write("No Tumor")
 if button2:
-    pass
+    uploaded_file = st.file_uploader("Choose an image...", type="jpg")
+    model = load_model("models/cnn_model.h5")
+    make_prediction(uploaded_file,model)
+
+    
 
 if button1:
     st.title("Sentiment Classification")
@@ -35,20 +52,22 @@ if button1:
         model_path = "models/rnn_model.h5"  # Replace with your actual path
         model = load_model(model_path)
         user_review = st.text_area("Enter your movie review:") 
-        dataset = pd.read_csv('RNN\spam.csv')
-        dataset['label'] = dataset['label'].map( {'spam': 1, 'ham': 0} )
-        X = dataset['message'].values
-        y = dataset['label'].values
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-        tokeniser = tf.keras.preprocessing.text.Tokenizer()
-        tokeniser.fit_on_texts(X_train)
-        encoded_train = tokeniser.texts_to_sequences(X_train)
-        encoded_test = tokeniser.texts_to_sequences(X_test)
-        encoded_sms = tokeniser.texts_to_sequences(user_review)
-        max_length = 10
-        padded_sms = tf.keras.preprocessing.sequence.pad_sequences(encoded_sms, maxlen=max_length, padding='post')
-        preds = (model.predict(padded_sms) > 0.5).astype("int32")
-        st.success(preds)
+        if st.button("Predict Sentiment"):
+            if user_review:
+                dataset = pd.read_csv('RNN\spam.csv')
+                dataset['label'] = dataset['label'].map( {'spam': 1, 'ham': 0} )
+                X = dataset['message'].values
+                y = dataset['label'].values
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+                tokeniser = tf.keras.preprocessing.text.Tokenizer()
+                tokeniser.fit_on_texts(X_train)
+                encoded_train = tokeniser.texts_to_sequences(X_train)
+                encoded_test = tokeniser.texts_to_sequences(X_test)
+                encoded_sms = tokeniser.texts_to_sequences(user_review)
+                max_length = 10
+                padded_sms = tf.keras.preprocessing.sequence.pad_sequences(encoded_sms, maxlen=max_length, padding='post')
+                preds = (model.predict(padded_sms) > 0.5).astype("int32")
+                st.success(preds)
 
     elif model_type == "LSTM":
         model_path = "models/lstm_model.h5"  # Replace with your actual path
