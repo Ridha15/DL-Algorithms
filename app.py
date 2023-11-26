@@ -35,7 +35,7 @@ if button2:
         st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
 
     # Add a "Predict" button in a separate column
-    col3 = st.column()
+    col3 = st.columns(1)
     with col3:
         if st.button("Predict"):
             st.write("Predict button clicked")  # Debugging statement
