@@ -31,12 +31,7 @@ if button2:
     if uploaded_image is not None:
         model_cnn = load_model("models/cnn_model.h5")
 
-        # Display the uploaded image using matplotlib
-        image = Image.open(uploaded_image)
-        plt.imshow(image)
-        plt.axis("off")
-        st.pyplot(plt)
-
+        st.image(image, caption="Uploaded Image", use_column_width=True)
         # Add debugging statements
         st.write("Image displayed successfully")
 
